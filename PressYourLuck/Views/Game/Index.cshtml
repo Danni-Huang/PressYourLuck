@@ -1,0 +1,57 @@
+﻿@using Microsoft.AspNetCore.Http
+@using PressYourLuck.Helpers;
+@model List<Tile>
+@{
+    double bet = CoinsHelper.GetCurrentBet(Context);
+}
+<div>
+    Current Bet: $@bet.ToString("N2")
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+            aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    @if (bet > 0)
+    {
+        <a asp-controller="Game" asp-action="TakeCoins" method="get" class="btn btn-success float-md-right">TAKE THE COINS!</a>
+    }
+    else if (bet == 0.00)
+    {
+        <a asp-controller="Home" asp-action="Index" method="get" class="btn btn-success float-md-right">Try Again!</a>
+    }
+</div>
+
+<div class="row">
+    @foreach (var tile in Model)
+    {
+        <div class="col-sm col-sm-2">
+            <div class="card">
+                @if (tile.Visible == false)
+                {
+                    <img src="~/images/unknown.png" class="card-img-top" alt="...">
+                }
+                else if (tile.Value == "0.00")
+                {
+                    <img src="~/images/bust.png" class="card-img-top" alt="...">
+
+                }
+                else
+                {
+                    <img src="~/images/money.png" class="card-img-top" alt="...">
+                }
+                <div class="card-body">
+                    @if (tile.Visible == false)
+                    {
+                        <div><a asp-controller="Game" asp-action="Reveal" asp-route-id="@tile.TileIndex" class="btn btn-primary">CHOOSE</a></div>
+                    }
+                    else
+                    {
+                        <div>@tile.Value</div>
+                    }
+
+                </div>
+            </div>
+        </div>
+    }
+</div>
+

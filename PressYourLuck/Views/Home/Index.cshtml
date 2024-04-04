@@ -1,0 +1,20 @@
+﻿@using Microsoft.AspNetCore.Http
+@{
+    string player = Context.Request.Cookies["name"];
+}
+
+<div class="col-xs-12 col-sm-6">
+    <h1>Welcome, @player</h1>
+    @*<a asp-controller="Game" asp-action="Index">Check out the Tile List</a>*@
+    <p>How many coins would you like to wager?</p>
+    <form asp-controller="Game" asp-action="GetBet" method="get" enctype="application/x-www-form-urlencoded">
+        <div class="form-group">
+            <input type="text" for="current-bet" id="current-bet" name="current-bet" class="form-control" />
+        </div>
+        <input type="submit" value="Start Playing!" class="btn btn-primary" />
+    </form>
+
+</div>
+
+
+
